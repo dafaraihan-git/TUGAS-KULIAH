@@ -34,7 +34,31 @@ Selain itu, FinTrack dirancang dengan arsitektur RESTful API yang memungkinkan s
 
 ## 🗃️ Struktur Folder
 
-
+📂 fintrack-laravel  
+┣ 📂 api              → Endpoint RESTful API  
+┣ 📂 aplikasi         → Logika dan fitur utama aplikasi  
+┣ 📂 bootstrap        → Proses inisialisasi aplikasi  
+┣ 📂 konfigurasi      → File konfigurasi sistem  
+┣ 📂 basis_data       → Struktur dan pengelolaan database  
+┣ 📂 publik           → Aset publik (CSS, JavaScript, gambar)  
+┣ 📂 sumber_daya      → Tampilan (views) aplikasi  
+┣ 📂 rute             → Definisi routing aplikasi  
+┣ 📂 penyimpanan      → Penyimpanan file dan cache  
+┣ 📂 tes              → File pengujian sistem  
+┣ 📄 .editorconfig    → Konfigurasi editor  
+┣ 📄 .gitignore       → Konfigurasi file yang diabaikan Git  
+┣ 📄 .vercelignore    → Konfigurasi ignore untuk deployment Vercel  
+┣ 📄 README.md        → Dokumentasi aplikasi  
+┣ 📄 composer.json    → Manajemen dependensi PHP  
+┣ 📄 composer.lock    → Versi terkunci dependensi PHP  
+┣ 📄 package.json     → Manajemen dependensi JavaScript  
+┣ 📄 package-lock.json→ Versi terkunci dependensi JavaScript  
+┣ 📄 phpunit.xml      → Konfigurasi pengujian PHP  
+┣ 📄 postcss.config.js→ Konfigurasi PostCSS  
+┣ 📄 tailwind.config.js → Konfigurasi Tailwind CSS  
+┣ 📄 vite.config.js   → Konfigurasi Vite  
+┣ 📄 vercel.json      → Konfigurasi deployment Vercel  
+┗ 📦 vendor.zip       → Arsip dependensi vendor
 
 
 ---
@@ -63,4 +87,140 @@ Selain itu, FinTrack dirancang dengan arsitektur RESTful API yang memungkinkan s
 
 ## 📸 Dokumentasi RESTful API
 
-(Dokumentasi RESTful API BELUM DI ISI)
+RESTful API pada aplikasi **FinTrack** digunakan sebagai penghubung antara frontend dan backend untuk mengelola data keuangan pengguna. API ini menggunakan format response **JSON** dan dapat diakses oleh pihak lain untuk keperluan integrasi sistem.
+
+---
+
+### 🔗 Base URL
+http://fintrack.wuaze.com/api
+
+---
+
+## 🔐 Autentikasi
+
+### Login Pengguna
+- **Method** : POST  
+- **Endpoint** : `/login`  
+- **Deskripsi** : Digunakan untuk autentikasi pengguna
+
+**Request Body:**
+```json
+{
+  "email": "user@email.com",
+  "password": "password123"
+}
+```
+**Response Sukses:**
+```json
+{
+  "status": "success",
+  "message": "Login berhasil",
+  "token": "jwt_token_example"
+}
+```
+### Registrasi Pengguna
+
+- **Metode** : POST
+- **Endpoint** : `/register`
+- **Deskripsi** : Digunakan untuk pendaftaran akun baru
+
+**Request Body:**
+```json
+{
+  "name": "Nama Pengguna",
+  "email": "user@email.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+```
+
+---
+
+## 💵 Transaksi
+
+### Menampilkan Semua Transaksi
+
+- **Metode** : GET
+- **Endpoint** : `/transactions`
+- **Deskripsi** : Mengambil seluruh data transaksi pengguna
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "tanggal": "2025-01-01",
+    "deskripsi": "Gaji Bulanan",
+    "kategori": "Gaji",
+    "tipe": "pemasukan",
+    "jumlah": 5000000
+  }
+]
+```
+
+### Menambah Transaksi
+
+- **Metode** : POST
+- **Endpoint** : `/transactions`
+
+**Request Body:**
+```json
+{
+  "tanggal": "2025-01-05",
+  "deskripsi": "Makan Siang",
+  "kategori_id": 2,
+  "tipe": "pengeluaran",
+  "jumlah": 25000
+}
+```
+
+### Mengubah Transaksi
+
+- **Metode** : PUT
+- **Endpoint** : `/transactions/{id}`
+
+### Menghapus Transaksi
+
+- **Metode** : DELETE
+- **Endpoint** : `/transactions/{id}`
+
+---
+
+## 🗂️ Kategori
+
+### Menampilkan Semua Kategori
+
+- **Metode** : GET
+- **Endpoint** : `/categories`
+
+### Menambah Kategori
+
+- **Metode** : POST
+- **Endpoint** : `/categories`
+
+**Request Body:**
+```json
+{
+  "nama_kategori": "Transportasi",
+  "tipe": "pengeluaran"
+}
+```
+
+---
+
+## 📊 Dashboard
+
+### Ringkasan Keuangan
+
+- **Metode** : GET
+- **Endpoint** : `/dashboard/summary`
+- **Deskripsi** : Menampilkan total saldo, pemasukan, dan pengeluaran
+
+**Response:**
+```json
+{
+  "total_saldo": 19804000,
+  "total_pemasukan": 21500000,
+  "total_pengeluaran": 1696000
+}
+```
